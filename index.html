@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Masonry Gallery</title>
+  <link rel="stylesheet" href="app.css">
+  <script type="text/javascript" src="Handlebars.js"></script>
+</head>
+<body>
+  <header>Gallery</header>
+  <div class="container"></div>
+  <script id="pics-template" type="x-handlebars-template">
+  {{#each photo}}
+    <div class="pic-wrapper">
+      <div class="pic">
+        <img src="{{url_m}}" alt="photos">
+      </div>
+      <div class="title">
+        <p>{{title}}</p>
+      </div>
+    </div>
+  {{/each}}
+  </script>
+  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>

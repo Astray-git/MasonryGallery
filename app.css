@@ -1,0 +1,36 @@
+header {
+  text-align: center;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #F2F5F6;
+}
+
+.container {
+  position: relative;
+  width: 1250px;
+  margin: 20px auto 0;
+}
+
+.pic-wrapper {
+  position: absolute;
+  width: 236px;
+  margin: 14px 7px 0;
+  background-color: #C9D1D5;
+  box-shadow: 1px 1px 1px 1px grey;
+}
+
+.pic img {
+  width:100%;
+}
+
+.title {
+  margin: -3px 0 0;
+  padding: 0 10px;
+}
+
+.title p {
+  font-family: Helvetica, Arial, sans-serif;
+  margin: 0;
+}
