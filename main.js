@@ -36,59 +36,88 @@ var insPics = function(pics) {
   var container = document.getElementsByClassName('container')[0];
   container.innerHTML = template(pics);
   var imgs = document.getElementsByTagName('img');
-  imgs.onload = picRearrange(pics);
-};
+  
+  var picRearrange = function(col) {
+    var wrappers = document.getElementsByClassName('pic-wrapper'),
+      absoluteLeft = ['0', '250px', '500px', '750px', '1000px', '1250px', '1500px'],
+      totalHeight = null;
 
-var picRearrange = function(pics) {
-  var wrappers = document.getElementsByClassName('pic-wrapper'),
-    imgs = document.getElementsByTagName('img'),
-    totalHeight = [0, 0, 0, 0, 0];
-  Array.prototype.forEach.call(wrappers, function(element, index, array) {
-    var oWidth = pics.photo[index].width_m;
-    var oHeight = pics.photo[index].height_m;
-    var cWidth = 236;
-    var cHeight = oHeight * cWidth / oWidth;
+    var arrayMax = function( array ){
+      return Math.max.apply( Math, array );
+    };
+    var prepareArray = function(value, len) {
+      var array = [];
+      while(len--) {
+        array[len] = value;
+      }
+      return array;
+    };
 
-    var count = (index + 1) % 5;
+    totalHeight = prepareArray(0, col);
 
-    switch(count) {
-      case 1 : 
-        element.style.left = '0';
-        if(index > 1) {
-          element.style.top = totalHeight[0].toString() + 'px';
+    Array.prototype.forEach.call(wrappers, function(element, index, array) {
+      var oWidth = pics.photo[index].width_m,
+        oHeight = pics.photo[index].height_m,
+        cWidth = 236,
+        cHeight = Math.round(oHeight * cWidth / oWidth);
+
+      var rIndex = (index + 1) % col;
+      if (rIndex > 0) {
+        element.style.left = absoluteLeft[rIndex - 1];
+        if(index > rIndex) {
+          element.style.top = totalHeight[rIndex - 1].toString() + 'px';
         }
-        totalHeight[0] += cHeight + 30;
-      break;
-      case 2 : 
-        element.style.left = '250px';
-        if(index > 2) {
-          element.style.top = totalHeight[1].toString() + 'px';
+        totalHeight[rIndex - 1] += cHeight + 34;
+      } else {
+        element.style.left = absoluteLeft[col - 1];
+        if(index > rIndex) {
+          element.style.top = totalHeight[col - 1].toString() + 'px';
         }
-        totalHeight[1] += cHeight + 30;
-      break;
-      case 3 : 
-        element.style.left = '500px';
-        if(index > 2) {
-          element.style.top = totalHeight[2].toString() + 'px';
-        }
-        totalHeight[2] += cHeight + 30;
-      break;
-      case 4 : 
-        element.style.left = '750px';
-        if(index > 3) {
-          element.style.top = totalHeight[3].toString() + 'px';
-        }
-        totalHeight[3] += cHeight + 30;
-      break;
-      case 0 : 
-        element.style.left = '1000px';
-        if(index > 4) {
-          element.style.top = totalHeight[4].toString() + 'px';
-        }
-        totalHeight[4] += cHeight + 30;
-      break;
-    }
+        totalHeight[col - 1] += cHeight + 34;
+      }
+
+      if(index == array.length - 1) {
+        var container = document.getElementsByClassName('container')[0];
+        container.style.height = (arrayMax(totalHeight) + 30).toString() + 'px';
+      }
+    });
+  };
+
+  imgs.onload = picRearrange(7);
+
+  enquire
+  .register("screen and (max-width:1750px)", {
+      match : function() {
+        picRearrange(6);
+      },
+      unmatch: function() {
+        picRearrange(7);
+      }
+  })
+  .register("screen and (max-width:1500px)", {
+      match : function() {
+        picRearrange(5);
+      },
+      unmatch: function() {
+        picRearrange(6);
+      }
+  })
+  .register("screen and (max-width:1250px)", {
+      match : function() {
+        picRearrange(4);
+      },
+      unmatch: function() {
+        picRearrange(5);
+      }
+  })
+  .register("screen and (max-width:1000px)", {
+      match : function() {
+        picRearrange(3);
+      },
+      unmatch: function() {
+        picRearrange(4);
+      }
   });
-}
+};
 
 document.addEventListener('DOMContentLoaded', getPics);
