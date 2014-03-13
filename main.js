@@ -1,22 +1,4 @@
-// json
-// var getPics = function() {
-//   var xhr = new XMLHttpRequest();
-//   xhr.onreadystatechange = function(){
-//     if(this.readyState == 4) {
-//       if ((this.status >= 200 && this.status < 300) || this.status == 304) {
-//         var photoData = JSON.parse(this.response).photos;
-//         insPics(photoData);
-//       } else {
-//         console.log('Request was unsuccessful: ' + this.status);
-//       }
-//     }
-//   };
-//   xhr.open('GET', 'test.json', true);
-//   xhr.send(null);
-//   xhr = null;
-// };
-
-// jsonp
+// jsonp callback function
 function jsonFlickrApi(obj) {
   var photos = obj.photos;
   insPics(photos);
@@ -85,6 +67,7 @@ var insPics = function(pics) {
 
   imgs.onload = picRearrange(7);
 
+  // MediaQuery
   enquire
   .register("screen and (max-width:1750px)", {
       match : function() {
