@@ -40,11 +40,81 @@ body {
 /*  line-height: 20px;*/
 }
 
-.button {
+.loader {
   display: block;
-  width: 200px;
+  position: relative;
+  width: 50px;
   height: 50px;
-  margin: 20px auto;
+  border-radius: 10%;
+  margin: 0 auto 20px;
+  overflow: hidden;
+  -webkit-animation: bgcolor linear 4s infinite;
+  animation: bgcolor linear 4s infinite;
+  font-size:0;
+  line-height:0;
+  letter-spacing: -1px;
+}
+@-webkit-keyframes bgcolor {
+  0% {background: ForestGreen;}
+  20% {background: RoyalBlue;}
+  40% {background: Tomato;}
+  60% {background: DarkMagenta;}
+  80% {background: Gold;}
+  100% {background: ForestGreen;}
+}
+@keyframes bgcolor {
+  0% {background: ForestGreen;}
+  20% {background: RoyalBlue;}
+  40% {background: Tomato;}
+  60% {background: DarkMagenta;}
+  80% {background: Gold;}
+  100% {background: ForestGreen;}
+}
+
+.loader div {
+  position: absolute;
+  width: 12.5px;
+  display: inline-block;
+  -webkit-animation-name: boxfirst;
+  animation-name: boxfirst;
+  -webkit-animation-duration: .55s;
+  animation-duration: .55s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+.box1, .box3, .box6, .box8 {
+  height: 37.5px;
+}
+.box2, .box4, .box5, .box7 {
+  height: 12.5px;
+}
+.box1, .box2, .box3, .box4 { top:0; }
+.box5, .box7 { top: 37.5px; }
+.box6, .box8 { top: 12.5px; }
+.box1, .box5 { left: 0; }
+.box2, .box6 { left: 12.5px; }
+.box3, .box7 { left: 25px; }
+.box4, .box8 { left: 37.5px; }
+.box1 { -webkit-animation-delay: -.35s; animation-delay: -.35s; }
+.box2 { -webkit-animation-delay: -.30s; animation-delay: -.30s; }
+.box3 { -webkit-animation-delay: -.25s; animation-delay: -.25s; opacity: .5; }
+.box4 { -webkit-animation-delay: -.20s; animation-delay: -.20s; }
+.box8 { -webkit-animation-delay: -.15s; animation-delay: -.15s; }
+.box7 { -webkit-animation-delay: -.10s; animation-delay: -.10s; }
+.box6 { -webkit-animation-delay: -.5s; animation-delay: -.5s; opacity: .5; }
+.box5 { -webkit-animation-delay: 0s; animation-delay: 0s; }
+
+@-webkit-keyframes boxfirst {
+  0% {background-color: rgba(0,0,0,.2)}
+  50% {background-color: rgba(255,255,255,.2)}
+  100% {background-color: rgba(0,0,0,.2)}
+}
+@keyframes boxfirst {
+  0% {background-color: rgba(0,0,0,.2)}
+  50% {background-color: rgba(255,255,255,.2)}
+  100% {background-color: rgba(0,0,0,.2)}
 }
 
 @media screen and (max-width:1750px) {
