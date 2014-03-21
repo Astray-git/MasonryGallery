@@ -6,13 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="app.css">
   <script type="text/javascript" src="Handlebars.js"></script>
+  <script type="text/javascript" src="enquire.min.js"></script>
 </head>
 <body>
   <header>Gallery</header>
   <div class="container"></div>
-  <script type="text/javascript" src="enquire.min.js"></script>
+  <div>
+    <button class="button">more</button>
+  </div>
   <script id="pics-template" type="x-handlebars-template">
-  {{#each photo}}
+  {{#each this}}
     <div class="pic-wrapper">
       <div class="pic">
         <img src="{{url_m}}" alt="photos">
