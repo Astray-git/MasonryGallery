@@ -41,6 +41,7 @@ var picRearrange = function(col) {
       title = document.getElementsByClassName('title'),
       tHeight = title[index].clientHeight;
 
+    // initial layout
     element.style.left = 0;
     element.style.top = 0;
 
@@ -80,33 +81,19 @@ var insPics = function() {
       query4 = "screen and (min-width:1001px) and (max-width:1250px)",
       query5 = "screen and (max-width:1000px)",
       handler1 = {
-        //deferSetup : true,
-        match : function() { picRearrange(7); console.log("match 7");},
-        //unmatch: function() { picRearrange(6); },
-        //setup : function() { picRearrange(7); console.log("set 7");}
+        match : function() { picRearrange(7); }
       },
       handler2 = {
-        //deferSetup : true,
-        match : function() { picRearrange(6); console.log("match 6");},
-        //unmatch: function() { picRearrange(5); },
-        //setup : function() { picRearrange(6); console.log("set 6");}
+        match : function() { picRearrange(6); }
       },
       handler3 = {
-        deferSetup : true,
-        match : function() { picRearrange(5); console.log("match 5");},
-        //unmatch: function() { picRearrange(4); },
-        //setup : function() { picRearrange(5); console.log("set 5");}
+        match : function() { picRearrange(5); }
       },
       handler4 = {
-        //deferSetup : true,
-        match : function() { picRearrange(4); console.log("match 4");},
-        //unmatch: function() { picRearrange(5); },
-        //setup : function() { picRearrange(4); console.log("set 4");}
+        match : function() { picRearrange(4); }
       },
       handler5 = {
-        //deferSetup : true,
-        match : function() { picRearrange(3); console.log("match 3");},
-        //setup : function() { picRearrange(3); console.log("set 3");}
+        match : function() { picRearrange(3); }
       };
 
 
@@ -117,14 +104,6 @@ var insPics = function() {
       .register(query3, handler3)
       .register(query2, handler2)
       .register(query1, handler1);
-    // matchMedia("screen and (min-width: 1000px)").addListener(function(mql) {
-    // if(mql.matches) {
-    //     console.log("match");
-    // }
-    // else {
-    //     console.log("no match");
-    // }
-    // });
   };
 
   imgs.onload = addMQListener();
