@@ -1,8 +1,7 @@
 var photos = [];
-var pageNum = 2;
+var pageNum = 1;
 var container = document.getElementsByClassName('container')[0];
 var prevScrollPos = document.body.scrollTop;
-var moreUrl='https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_m&per_page=20&page='+ pageNum +'&format=json';
 
 // jsonp callback function
 function jsonFlickrApi(obj) {
@@ -10,15 +9,17 @@ function jsonFlickrApi(obj) {
   insPics();
 }
 
-var getPics = function(url, init) {
+var getPics = function() {
   var script = document.createElement('script');
+  var url='https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_m&per_page=15&page='+ pageNum +'&format=json';
   script.type="text/javascript";
   script.src = url;
-  if(init){
+  if(pageNum == 1){
     document.getElementsByTagName('head')[0].appendChild(script);
   } else {
     document.body.appendChild(script);
   }
+  pageNum++;
 };
 
 var picRearrange = function(col) {
@@ -148,9 +149,7 @@ function scrollHandler(scroller, event) {
 }
 
 var loadMore = function() {
-  getPics(moreUrl, false);
-  pageNum++;
+  getPics();
 };
 
-var initUrl = 'https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_m&per_page=20&format=json';
-document.addEventListener('DOMContentLoaded', getPics(initUrl, true));
+document.addEventListener('DOMContentLoaded', getPics());
