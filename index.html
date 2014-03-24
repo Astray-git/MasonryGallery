@@ -5,8 +5,8 @@
   <title>Masonry Gallery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="app.css">
-  <script type="text/javascript" src="handlebars-v1.3.0.js"></script>
-  <script type="text/javascript" src="enquire.js"></script>
+  <script type="text/javascript" src="js/vendor/handlebars.runtime.js"></script>
+  <script type="text/javascript" src="js/vendor/enquire.js"></script>
   <link rel="icon" type="image/ico" href="favicon.ico"/>
 </head>
 <body>
@@ -22,18 +22,7 @@
     <div class="box7"></div>
     <div class="box8"></div>
   </div>
-  <script id="pics-template" type="x-handlebars-template">
-  {{#each this}}
-    <div class="pic-wrapper">
-      <div class="pic">
-        <img src="{{url_m}}" alt="photos">
-      </div>
-      <div class="title">
-        <p>{{title}}</p>
-      </div>
-    </div>
-  {{/each}}
-  </script>
-  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="js/templates.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
