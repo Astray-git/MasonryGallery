@@ -17,28 +17,43 @@ var getPics = function() {
   if(pageNum == 1){
     document.getElementsByTagName('head')[0].appendChild(script);
   } else {
+    var indicator = document.getElementsByClassName('loader')[0],
+      boxes = document.querySelectorAll('.loader div'), i, len;
+    function startAnim(element) {
+      element.style.opacity = 1;
+      element.style.webkitAnimationPlayState = 'running';
+      element.style.animationPlayState = 'running';
+    }
+    startAnim(indicator);
+    for(i = 0, len = boxes.length; i < len; i++) {
+      startAnim(boxes[i]);
+    }
+
     document.body.appendChild(script);
   }
+
   pageNum++;
 };
 
 var picRearrange = function(col) {
   var wrapper = document.getElementsByClassName('pic-wrapper'),
     absoluteLeft = ['0', '250px', '500px', '750px', '1000px', '1250px', '1500px'],
-    totalHeight = [0,0,0,0,0,0,0];
+    totalHeight = [0,0,0,0,0,0,0],
+    index,len;
 
-  var arrayMax = function( array ){
-    return Math.max.apply( Math, array );
+  var arrayMax = function(array){
+    return Math.max.apply(Math, array);
   };
 
-  Array.prototype.forEach.call(wrapper, function(element, index, array) {
+  for(index = 0, len = wrapper.length; index < len; index++){
     var oWidth = photos[index].width_m,
       oHeight = photos[index].height_m,
       eWidth = 236,
       eHeight = Math.round(oHeight * eWidth / oWidth),
       title = document.getElementsByClassName('title'),
-      tHeight = title[index].clientHeight;
+      tHeight = title[index].offsetHeight;
 
+    var element = wrapper[index];
     // initial layout
     element.style.left = 0;
     element.style.top = 0;
@@ -58,17 +73,31 @@ var picRearrange = function(col) {
       totalHeight[col - 1] += eHeight + tHeight + 20;
     }
 
-    if(index == array.length - 1) {
+    if(index == len - 1) {
       container.style.height = (arrayMax(totalHeight) + 30).toString() + 'px';
     }
-  });
+  }
+  
+  var indicator = document.getElementsByClassName('loader')[0],
+      boxes = document.querySelectorAll('.loader div'),
+      i,boxlen;
+
+  function stopAnim(element) {
+    element.style.webkitAnimationPlayState = 'paused';
+    element.style.animationPlayState = 'paused';
+    element.style.opacity = 0;
+  }
+
+  stopAnim(indicator);
+  for(i = 0, boxlen = boxes.length; i < boxlen; i++) {
+    stopAnim(boxes[i]);
+  }
 
   infiniteScroll(loadMore);
 };
 
 var insPics = function() {
-  var templateScript = document.getElementById('pics-template').innerHTML;
-  var template = Handlebars.compile(templateScript);
+  var template = Handlebars.templates['pics'];
   container.innerHTML = template(photos);
 
   // MediaQuery
