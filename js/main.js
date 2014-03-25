@@ -1,6 +1,8 @@
 var photos = [];
 var pageNum = 1;
 var container = document.getElementsByClassName('container')[0];
+var placeholder = document.getElementsByClassName('placeholder')[0];
+var bodyHeight;
 var prevScrollPos = document.body.scrollTop;
 
 // jsonp callback function
@@ -11,7 +13,7 @@ function jsonFlickrApi(obj) {
 
 var getPics = function() {
   var script = document.createElement('script');
-  var url='https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_m&per_page=15&page='+ pageNum +'&format=json';
+  var url='https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_z&per_page=15&page='+ pageNum +'&format=json';
   script.type="text/javascript";
   script.src = url;
   if(pageNum == 1){
@@ -19,11 +21,11 @@ var getPics = function() {
   } else {
     var indicator = document.getElementsByClassName('loader')[0],
       boxes = document.querySelectorAll('.loader div'), i, len;
-    function startAnim(element) {
+    var startAnim = function(element) {
       element.style.opacity = 1;
       element.style.webkitAnimationPlayState = 'running';
       element.style.animationPlayState = 'running';
-    }
+    };
     startAnim(indicator);
     for(i = 0, len = boxes.length; i < len; i++) {
       startAnim(boxes[i]);
@@ -46,8 +48,8 @@ var picRearrange = function(col) {
   };
 
   for(index = 0, len = wrapper.length; index < len; index++){
-    var oWidth = photos[index].width_m,
-      oHeight = photos[index].height_m,
+    var oWidth = photos[index].width_z,
+      oHeight = photos[index].height_z,
       eWidth = 236,
       eHeight = Math.round(oHeight * eWidth / oWidth),
       title = document.getElementsByClassName('title'),
@@ -97,7 +99,7 @@ var picRearrange = function(col) {
 };
 
 var insPics = function() {
-  var template = Handlebars.templates['pics'];
+  var template = Handlebars.templates.pics;
   container.innerHTML = template(photos);
 
   // MediaQuery
@@ -132,8 +134,32 @@ var insPics = function() {
   };
 
   var imgs = document.getElementsByTagName('img');
-  imgs.onload = addMQListener();
+  var lightBoxLink = document.getElementsByClassName('pic'),i,len;
+
+  EventUtil.addHandler(imgs, 'load', addMQListener());
+
+  for(i = 0, len = lightBoxLink.length; i < len; i++){
+      EventUtil.addHandler(lightBoxLink[i], 'click', lightBox);
+  }
 };
+
+function lightBox(e){
+  var event = EventUtil.getEvent(e);
+  var target = EventUtil.getTarget(event);
+  EventUtil.preventDefault(event);
+  var index = parseInt(target.parentNode.id.slice(4));
+  placeholder.parentNode.className = 'lightbox js-show';
+  bodyHeight = document.body.style.height;
+  document.body.style.height = window.innerHeight + 'px';
+  document.body.style.overflow = 'hidden';
+  if(parseInt(photos[index].height_z) > parseInt(photos[index].width_z)) {
+    placeholder.style.height = Math.round(472 * photos[index].height_z / photos[index].width_z) + 'px';
+  } else {
+    placeholder.style.width = '640px';
+    placeholder.style.height = Math.round(640 * photos[index].height_z / photos[index].width_z) + 'px';
+  }
+  placeholder.style.backgroundImage = 'url('+ photos[index].url_z + ')';
+}
 
 var infiniteScroll = function(handler) {
   var scroller = {
@@ -180,5 +206,36 @@ function scrollHandler(scroller, event) {
 var loadMore = function() {
   getPics();
 };
+
+var EventUtil = {
+  addHandler: function(element, type, handler){
+    if (element.addEventListener){
+      element.addEventListener(type, handler, false);
+    } else if (element.attachEvent){
+      element.attachEvent("on" + type, handler);
+    } else {
+      element["on" + type] = handler;
+    }
+  },
+  getEvent: function(event){
+    return event ? event : window.event;
+  },
+  getTarget: function(event){
+    return event.target || event.srcElement;
+  },
+  preventDefault: function(event){
+    if (event.preventDefault){
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+  }
+};
+
+EventUtil.addHandler(placeholder.parentNode, 'click', function(){
+  placeholder.parentNode.className = 'lightbox js-hide';
+  document.body.style.height = bodyHeight + 'px';
+  document.body.style.overflow = 'auto';
+});
 
 document.addEventListener('DOMContentLoaded', getPics());

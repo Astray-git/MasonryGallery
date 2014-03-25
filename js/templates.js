@@ -1,11 +1,15 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
 templates['pics'] = template({"1":function(depth0,helpers,partials,data) {
-  var helper, functionType="function", escapeExpression=this.escapeExpression;
-  return "\r\n  <div class=\"pic-wrapper\">\r\n    <div class=\"pic\">\r\n      <img src=\""
-    + escapeExpression(((helper = helpers.url_m || (depth0 && depth0.url_m)),(typeof helper === functionType ? helper.call(depth0, {"name":"url_m","hash":{},"data":data}) : helper)))
-    + "\" alt=\"photos\">\r\n    </div>\r\n    <div class=\"title\">\r\n      <p>"
-    + escapeExpression(((helper = helpers.title || (depth0 && depth0.title)),(typeof helper === functionType ? helper.call(depth0, {"name":"title","hash":{},"data":data}) : helper)))
+  var stack1, functionType="function", escapeExpression=this.escapeExpression;
+  return "\r\n  <div class=\"pic-wrapper\">\r\n    <a class=\"pic\" id=\"pic-"
+    + escapeExpression(((stack1 = (data == null || data === false ? data : data.index)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" href=\""
+    + escapeExpression(((stack1 = (depth0 && depth0.url_z)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\">\r\n      <img src=\""
+    + escapeExpression(((stack1 = (depth0 && depth0.url_z)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" alt=\"photos\">\r\n    </a>\r\n    <div class=\"title\">\r\n      <p>"
+    + escapeExpression(((stack1 = (depth0 && depth0.title)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "</p>\r\n    </div>\r\n  </div>\r\n";
 },"compiler":[5,">= 2.0.0"],"main":function(depth0,helpers,partials,data) {
   var stack1;
