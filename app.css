@@ -1,10 +1,10 @@
-header {
-  text-align: center;
+body {
+  background-color: #F2F5F6;
   font-family: Helvetica, Arial, sans-serif;
 }
 
-body {
-  background-color: #F2F5F6;
+header {
+  text-align: center;
 }
 
 .container {
@@ -32,7 +32,6 @@ body {
 }
 
 .title p {
-  font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
   text-align: center;
   padding: 0;
@@ -161,6 +160,9 @@ body {
   100% {background-color: rgba(0,0,0,.2)}
 }
 
+/*
+  Media Queries
+*/
 @media screen and (max-width:1750px) {
   .container {
     width: 1500px;
