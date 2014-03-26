@@ -11,7 +11,7 @@ function jsonFlickrApi(obj) {
   insPics();
 }
 
-var getPics = function() {
+function getPics() {
   var script = document.createElement('script');
   var url='https://api.flickr.com/services/rest/?method=flickr.people.getPhotos&api_key=2202999fc9c18d1e5168b73f8cc440de&user_id=14738778%40N03&extras=url_z&per_page=15&page='+ pageNum +'&format=json';
   script.type="text/javascript";
@@ -35,7 +35,7 @@ var getPics = function() {
   }
 
   pageNum++;
-};
+}
 
 var picRearrange = function(col) {
   var wrapper = document.getElementsByClassName('pic-wrapper'),
