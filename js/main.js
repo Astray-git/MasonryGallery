@@ -106,7 +106,6 @@ function jsonFlickrApi(obj) {
     };
 
     var imgs = document.getElementsByTagName('img');
-    var lightBoxLink = document.getElementsByClassName('pic'),i,len;
 
     EventUtil.addHandler(imgs, 'load', addMQListener());
 
@@ -214,6 +213,8 @@ EventUtil.addHandler(placeholder.parentNode, 'click', function(){
 var gallery = {
   headElem: document.getElementsByTagName('head')[0],
   bodyElem: document.body,
+  indicatorElem: document.getElementsByClassName('loader')[0],
+  boxElem: document.querySelectorAll('.loader div'),
   pageNum: 1,
   getPics: function() {
     var script = document.createElement('script');
@@ -222,21 +223,22 @@ var gallery = {
     if(this.pageNum == 1){
       this.headElem.appendChild(script);
     } else {
-      var indicator = document.getElementsByClassName('loader')[0],
-        boxes = document.querySelectorAll('.loader div'), i, len;
-      var startAnim = function(element) {
-        element.style.opacity = 1;
-        element.style.webkitAnimationPlayState = 'running';
-        element.style.animationPlayState = 'running';
-      };
-      startAnim(indicator);
-      for(i = 0, len = boxes.length; i < len; i++) {
-        startAnim(boxes[i]);
-      }
-
+      this.showIndicator();
       this.bodyElem.appendChild(script);
     }
     this.pageNum++;
+  },
+  showIndicator: function(){
+    var startAnim = function(element) {
+      element.style.opacity = 1;
+      element.style.webkitAnimationPlayState = 'running';
+      element.style.animationPlayState = 'running';
+    };
+    startAnim(this.indicatorElem);
+    var i, len;
+    for(i = 0, len = this.boxElem.length; i < len; i++) {
+      startAnim(this.boxElem[i]);
+    }
   }
 };
 
